@@ -215,6 +215,3 @@ tests2 = {'forbidden': 'forbiden', 'decisions': 'deciscions descisions',
 
 if __name__ == '__main__':
     print spelltest(tests1)
-
-
-    
