@@ -20,24 +20,34 @@
   (map #(concat x (str %) y) alphabet))
 
 (defn replaces [splits]
-  (map #(insert-alphabet (first %) (rest (second %))) (drop-last splits)))
+  (mapcat #(insert-alphabet (first %) (rest (second %))) (drop-last splits)))
 
 (defn inserts [splits]
-  (map #(insert-alphabet (first %) (second %)) splits))
+  (mapcat #(insert-alphabet (first %) (second %)) splits))
 
 (defn edits [word]
   (let
     [splits (split word)]
-    (set (concat (deletes splits) (transposes splits) (replaces splits) (inserts splits)))))
+    (set (map #(apply str %)
+              (concat (deletes splits)
+                      (transposes splits)
+                      (replaces splits)
+                      (inserts splits))))))
 
 (defn known [corpus words]
   (filter #(contains? corpus %) words))
 
 (defn candidates [corpus word]
-  (concat (known corpus [word])
-          (known corpus (edits word))
-          (flatten (known corpus (map edits (edits word))))
-          [word]))
+  (set (concat (known corpus [word])
+               (known corpus (edits word))
+               (flatten (known corpus (map edits (edits word))))
+               [word])))
+
+(defn score [corpus words]
+  (zipmap words (map #(get corpus % 0) words)))
+
+(defn all-correct [corpus word]
+  (sort-by #(- (val %)) (score foo (candidates corpus word))))
 
 (defn correct [corpus word]
-  )
+  (first (first (all-correct corpus word))))
