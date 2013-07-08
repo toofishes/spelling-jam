@@ -4,7 +4,9 @@ Copyright 2007 Peter Norvig.
 Open source code under MIT license: http://www.opensource.org/licenses/mit-license.php
 """
 
-import re, collections
+import re
+import sys
+import collections
 
 def words(text): return re.findall('[a-z]+', text.lower()) 
 
@@ -14,7 +16,7 @@ def train(features):
         model[f] += 1
     return model
 
-NWORDS = train(words(file('big.txt').read()))
+NWORDS = train(words(file(sys.argv[1]).read()))
 
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
