@@ -5,8 +5,8 @@
 (def corpus (parsers/read-sample-file "../data/big.txt"))
 
 (defn accuracy-report-for-word [word-map]
-  (let [word (first (keys word-map))
-        incorrect-spellings (get word-map word)
+  (let [word (first word-map)
+        incorrect-spellings (second word-map)
         hits (count (filter #(= word (spell/correct corpus %)) incorrect-spellings))]
     {:misses (- (count incorrect-spellings) hits) :total (count incorrect-spellings)}))
 
@@ -20,7 +20,7 @@
               {:hits hits
                :misses misses
                :total total
-               :accuracy (/ hits total)}))
+               :accuracy (double (/ hits total))}))
             {:misses 0 :total 0} spellings)))
 
 (defn -main []
