@@ -13,8 +13,9 @@
 (defn accuracy-for-test-file [file]
   (let [spellings (parsers/read-test-file file)]
     (reduce (fn [result spelling]
-              (let [misses (+ (:misses result))
-                    total (+ (:total result))
+              (let [spelling-result (accuracy-report-for-word spelling)
+                    misses (+ (:misses result) (:misses spelling-result))
+                    total (+ (:total result) (:total spelling-result))
                     hits (- total misses)]
               {:hits hits
                :misses misses
