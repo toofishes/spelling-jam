@@ -47,7 +47,7 @@
   (zipmap words (map #(get corpus % 0) words)))
 
 (defn all-correct [corpus word]
-  (sort-by #(- (val %)) (score foo (candidates corpus word))))
+  (sort-by #(- (val %)) (score corpus (candidates corpus word))))
 
 (defn correct [corpus word]
   (first (first (all-correct corpus word))))

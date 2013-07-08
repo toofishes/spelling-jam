@@ -2,7 +2,7 @@
   (:require [spelling-corrector.parsers :as parsers]
             [spelling-corrector.spell :as spell]))
 
-(def corpus (parsers/read-sample-file "/Users/ccross/dev/spelling-jam/data/big.txt"))
+(def corpus (parsers/read-sample-file "../data/big.txt"))
 
 (defn accuracy-report-for-word [word-map]
   (let [word (first (keys word-map))
@@ -22,3 +22,6 @@
                :total total
                :accuracy (/ hits total)}))
             {:misses 0 :total 0} spellings)))
+
+(defn -main []
+  (accuracy-for-test-file "../data/test1.txt"))
