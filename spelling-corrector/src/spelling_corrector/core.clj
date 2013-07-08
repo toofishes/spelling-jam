@@ -15,9 +15,9 @@
     (reduce (fn [result spelling]
               (let [misses (+ (:misses result))
                     total (+ (:total result))
-                    hits (- total misses)])
+                    hits (- total misses)]
               {:hits hits
                :misses misses
                :total total
-               :accuracy (/ hits accuracy)})
+               :accuracy (/ hits total)}))
             {:misses 0 :total 0} spellings)))
